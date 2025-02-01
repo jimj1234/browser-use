@@ -1,25 +1,24 @@
-# Use an official Python runtime as the base image.
-FROM python:3.9-slim
+# Use an official Python 3.11 runtime as the base image.
+FROM python:3.11-slim
 
 # Set the working directory in the container.
 WORKDIR /app
 
-# Copy over the project files.
-# (Assumes your Dockerfile is at the root of your repository.)
+# Copy the repository contents into the container.
 COPY . .
 
-# Upgrade pip and install your package in editable mode.
+# Upgrade pip and install the package in editable mode.
 RUN pip install --upgrade pip && \
     pip install -e .
 
-# Install additional dependencies for the demo.
-# This installs Gradio (used in the demo) and Playwright.
+# Install additional dependencies: Gradio and Playwright,
+# then download the necessary browser binaries.
 RUN pip install gradio playwright && \
     playwright install
 
-# Cloud Run (or your hosting service) expects the container to listen on port 8080.
+# Expose port 8080 (required for Cloud Run or similar platforms).
 EXPOSE 8080
 ENV PORT=8080
 
-# Set the entrypoint to run the Gradio demo.
+# Set the entrypoint to run the Gradio demo (adjust if needed).
 CMD ["python", "examples/ui/gradio_demo.py"]
