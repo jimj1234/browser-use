@@ -106,4 +106,5 @@ if __name__ == '__main__':
     # Read the port from the environment variable (default to 8080)
     port = int(os.environ.get("PORT", 8080))
     # Launch the Gradio demo, binding to all interfaces
-    demo.launch(server_name="0.0.0.0", server_port=port)
+    demo.launch(server_name="0.0.0.0", server_port=port, enable_api=True)
+
